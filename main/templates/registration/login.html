@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{%if not request.user.is_authenticated %}
+    <!-- Main Start -->
+	<style>
+	    /* Custom CSS styles for the form container */
+    .form-container {
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      max-width: 400px; /* Set the maximum width of the form container */
+      margin: 0 auto; /* Center the form container horizontally */
+    }
+
+    /* Custom CSS styles for the form input fields */
+    input[type="text"],
+    textarea {
+      border-radius: 8px;
+      transition: border-color 0.3s, background-color 0.3s;
+      background-color: #f2f2f2; /* Set the background color for input fields */
+      color: #333; /* Set the text color */
+      border: 1px solid #ccc; /* Set the border color */
+      padding: 10px; /* Add some padding to the input fields */
+      width: 100%; /* Set the input fields to occupy full width */
+    }
+
+    /* Change the border color when the input field is in focus */
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Custom CSS styles for the form submit button */
+    .btn-primary {
+      border-radius: 8px;
+      padding: 10px 20px; /* Add padding to the button */
+    }
+
+	</style>
+    <main>
+		<!-- Services -->
+		<section class="container my-4">
+			<h1 class="text-center mb-4 section-heading border-bottom pb-2">Login</h1>
+			<div class="row">
+				
+				<div class="col-md-6 offset-3">
+					{% if msg %}
+					<p class="text-success">{{msg}}</p>
+					{% endif %}
+					<div class="container my-4">
+						<div class="form-container">
+						  <form method="post" action="">
+							{% csrf_token %}
+							<table class="table table-bordered">
+							  {{form.as_table}}
+							  <tr>
+								<td colspan="2">
+								  <input type="submit" class="btn btn-primary" value="Submit" />
+								</td>
+							  </tr>
+							</table>
+						  </form>
+						</div>
+					  </div>
+					<p>If you are new , then please <a href="{% url 'signup' %}">SignUp</a></p>
+				</div>
+			</div>
+		</section>
+		<!-- End -->
+    </main>
+{%else%}
+<p>Already Logged in</p>
+{%endif%}
+    <!-- End -->
+{% endblock %}

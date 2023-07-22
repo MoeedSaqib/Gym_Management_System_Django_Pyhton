@@ -1,0 +1,163 @@
+{%extends 'base.html' %}
+{%load static%}
+{% block content %}
+
+
+<style>
+   
+    .carousel-container {
+     
+      width: 48%; /* Set the width to cover the right half of the screen */
+      float: right; /* Float the container to the right */
+      height: 70vh; /* Set the container height to 80% of the viewport height */
+      padding: 25px; /* Add padding to the container */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add realistic shadow */
+      border-radius: 8px; /* Add rounded corners for a more polished look */
+      overflow: hidden; /* Hide any overflowing content (e.g., stretched images) */
+   
+    }
+
+    .carousel-item img {
+      /* Set a fixed width and height for the carousel images */
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Stretch the images to fill the container while maintaining aspect ratio */
+      border-radius: 8px; /* Apply rounded corners to the carousel images to match the container */
+    }
+    .content-container {
+        width: 48%; /* Set the width to cover the right half of the screen */
+        float: leftt; /* Float the container to the right */
+        height: 70vh; /* Set the container height to 80% of the viewport height */
+        padding: 25px; /* Add padding to the container */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add realistic shadow to the content container */
+      
+        border-radius: 8px; /* Add rounded corners for a more polished look */
+        overflow: hidden;  
+    }
+
+
+    .contents-container {
+        width: 97%; /* Set the width to cover the right half of the screen */
+       
+        height: 70vh; /* Set the container height to 80% of the viewport height */
+        padding: 45px; /* Add padding to the container */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add realistic shadow to the content container */
+      
+        border-radius: 8px; /* Add rounded corners for a more polished look */
+        overflow: hidden;  
+    }
+
+
+
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 5px;
+        background-color: #4d4d4d; /* Set the background color of the cards to black */
+        color:  white; /* Set the text color to white for better visibility on dark background */
+      }
+      
+      .card-img-top {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      
+      .card-title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      .card-text {
+        font-size: 16px; /* Customize the font size for the card text */
+        margin-bottom: 10px; /* Add some margin below the card text for spacing */
+      }
+      
+      .btn-secondary {
+        background-color:  #262626; /* Set the background color of the buttons to a blue color */
+        border-color: white; /* Set the border color of the buttons to match the background color */
+      }
+      
+      .btn-secondary:hover {
+        background-color: #404040; /* Change the background color of the buttons on hover */
+        border-color: red /* Change the border color of the buttons on hover */
+      
+    }
+
+</style>
+
+ <div class="carousel-container  mx-3 my-1">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for banner in banner %}
+          <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+            <img src="{{banner.img.url}}" class="d-block w-100" alt="Slide 1"></a>
+          </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+ </div>
+
+
+
+ <div class="content-container mx-3 my-1"> <!-- Add mx-2 and my-2 for horizontal and vertical margins -->
+   
+      <h1 class="text-center mb-4 section-heading">Services</h1>
+      <div class="row">
+        {% for i in services %}
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{i.img.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h3 class="card-title">{{i.title}}</h3>
+              <p class="card-text">{{ i.detail|truncatewords_html:13}}</p>
+              <a href="#" class="btn btn-secondary">Read More</a>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+  
+  </div>
+
+<br>
+
+<br>
+
+<br>
+
+    <div class="contents-container mx-4 my-5">
+        <div class="row">
+            <div class="col-md-5">
+                    <h1 class="mb-4 section-heading">About Us</h1>
+                    <p class="lh-base">"Welcome to our gym, where we believe that fitness is not just a hobby, but a way of life. Our state-of-the-art facilities offer the latest in fitness equipment and technology, and our team of experienced trainers is here to guide and motivate you every step of the way. Whether you're looking to lose weight, build muscle, or simply improve your overall health and wellbeing, our customized fitness plans will help you achieve your goals. Join us today and become part of a community that is passionate about fitness and dedicated to helping you reach your full potential.
+                        At our gym, we believe that fitness is not just about working out, but about living your best life. That's why we offer a holistic approach to fitness that includes nutrition counseling, wellness coaching, and a range of fitness classes to suit every interest and fitness level. Our team of certified trainers is here to help you achieve your goals and unlock your full potential, whether you're looking to lose weight, build muscle, or simply feel better in your own skin. Join our community today and discover the transformative power of a healthy, active lifestyle."</p>
+                    <p><a href="{% url 'pagedetail' 1 %}" class="btn btn-info text-white">Read More</a></p>
+            </div>
+            <div class="col-md-6 offset-1">
+                    <h1 class="mb-4 section-heading">Gallery <a href="#" class="float-end btn btn-info text-white mt-2">View All</a></h1>
+                    <div class="gallery">
+                        {% for images in gimgs  %}
+                         <a href="{{images.img.url}}" data-lightbox="gallery"><img src="{{images.img.url}}" width="155" class="img-thumbnail" alt="{{image.alt_text}}">
+                        {% endfor %}
+                        
+                    </div>
+            </div>
+        </div>
+     </div>
+  
+
+     <link rel="stylesheet" type="text/css" href="{% static 'lightbox/dist/css/lightbox.css' %}"/>
+	<script type="text/javascript" src="{% static 'lightbox/dist/js/lightbox.js' %}"></script>
+
+
+{%endblock%}

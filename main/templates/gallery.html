@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}  
+  
+  <!-- Main Start -->
+  <style>
+    .content-container {
+      width: 98%; /* Set the width to cover the right half of the screen */
+ 
+      /* Set the container height to 80% of the viewport height */
+      padding: 45px; /* Add padding to the container */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add realistic shadow to the content container */
+    padding-left:405px;
+    padding-right:405px;
+      border-radius: 8px; /* Add rounded corners for a more polished look */
+      overflow: hidden;  
+  }
+
+
+  .card {
+    width: 100%; /* Set the width of the card to 100% to fit its container */
+    height: 100%; /* Set the height of the card to 100% to fit its container */
+    max-width: 300px; /* Set the maximum width of the card to 300px */
+    max-height: 500px; /* Set the maximum height of the card to 400px */
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #4d4d4d; /* Set the background color of the cards to black */
+    color:  white; /* Set the text color to white for better visibility on dark background */
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 16px; /* Customize the font size for the card text */
+    margin-bottom: 10px; /* Add some margin below the card text for spacing */
+  }
+  
+  .btn-secondary {
+    background-color:  #262626; /* Set the background color of the buttons to a blue color */
+    border-color: white; /* Set the border color of the buttons to match the background color */
+  }
+  
+  .btn-secondary:hover {
+    background-color: #404040; /* Change the background color of the buttons on hover */
+    border-color: red /* Change the border color of the buttons on hover */
+  
+}
+
+
+  </style>
+
+    <!-- Services -->
+    <div class="content-container mx-3 my-1"> 
+        <h1 class="text-center mb-4 section-heading border-bottom pb-2">Gallery</h1>
+        <div class="row">
+            {% for g in gallerys  %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                  <img src={{g.img.url}} class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{g.title}}</h5>
+                    <p class="card-text">{{g.detail}}</p>
+                    <a href="{% url 'gallery_detail' g.id %}" class="btn btn-secondary">View All</a>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+
+    <!-- End -->
+
+<!-- End -->
+{% endblock %}

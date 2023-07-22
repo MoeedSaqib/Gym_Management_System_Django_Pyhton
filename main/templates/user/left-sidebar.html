@@ -1,0 +1,29 @@
+<style>
+	.list-group-item{
+	   background-color: dimgrey;
+	  
+	}
+ 
+	.list-groups{
+	 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	 border-radius: 10px;
+	 padding: 10px;
+	 top: 0; /* Adjust the top position as needed */
+	 bottom: 0; /* Adjust the bottom position as needed */
+	 left: 0;
+	 width: 200px; 
+	
+  }
+
+</style>
+
+
+<div class="list-groups mx-1 ml-auto">
+	<a href="{% url 'user_dashboard' %}" class="list-group-item {% if request.path == '/user-dashboard' %} active {% endif %}">Dashboard</a>
+	<a href="{% url 'update_profile' %}" class="list-group-item {% if request.path == '/update-profile' %} active {% endif %}">Profile</a>
+	<a href="{% url 'password_change' %}" class="list-group-item {% if request.path == '/accounts/password_change/' %} active {% endif %}">Change Password</a>
+	
+	<a href="{% url 'report_for_trainer' %}" class="list-group-item {% if request.path == '/report_for_trainer' %} active {% endif %}">Report for Trainer</a>
+
+	<a href="{% url 'notifs' %}" class="list-group-item {% if request.path == '/notifs' %} active {% endif %}">Notifications<span class="float-end badge bg-info mt-1">{{total_unread}}</span></a>
+</div>

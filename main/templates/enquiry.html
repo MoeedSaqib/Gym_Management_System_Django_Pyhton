@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Main Start -->
+	<style>
+		/* Custom CSS styles for the image container */
+		.image-container {
+		  padding: 10px; /* Add padding to the image container */
+		  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the image container */
+		  border-radius: 10px; /* Make the edges of the container rounded */
+		}
+	
+		/* Custom CSS styles for the image */
+		.image-container img {
+		  border-radius: 10px; /* Make the edges of the image rounded */
+		}
+
+		.form-container {
+			padding: 5px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+			border-radius: 5px;
+			background-color: #666666; /* Set a light background color for the form container */
+		  }
+		  .success-msg {
+			color: # black;
+	
+			margin-bottom: 10px;
+		  }
+	  
+		  /* Custom CSS styles for the form table */
+		  .form-table {
+			width: 100%;
+		
+		  }
+	  
+	
+	  
+		  /* Custom CSS styles for the form input fields */
+		  input[type="text"],
+		  textarea {
+			border-radius: 8px;
+			transition: border-color 0.3s, background-color 0.3s;
+			background-color: #666666; /* Set the background color to black */
+			color: white; /* Set the text color to white for better contrast */
+		  }
+	  
+		  /* Change the border color when the input field is in focus */
+		  input[type="text"]:focus,
+		  textarea:focus {
+			border-color: #007bff;
+			box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+		  }
+	      
+		  
+		
+		  /* Custom CSS styles for the form submit button */
+		  .btn-primary {
+			background-color:black;
+			color: white;
+			border-color: grey;
+			border-radius: 8px;
+		  }
+	  </style>
+	
+
+		<!-- Services -->
+		<section class="container my-4">
+			<h1 class="text-center mb-4 section-heading border-bottom pb-2">Enquiry Form</h1>
+			<div class="row">
+			  <div class="col-md-6">
+				<div class="image-container">
+				  <img src="{% static 'imgs/enquiry1.jpg' %}" class="img-fluid" /> 
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-container">
+				  {% if msg %}
+				  <p class="success-msg">{{msg}}</p>
+				  {% endif %}
+				  <form method="post" action="{% url 'enquiry' %}">
+					{% csrf_token %}
+					<table class="table table-bordered form-table">
+					  {{form.as_table}}
+					  <tr>
+						<td colspan="2">
+						  <input type="submit" class="btn btn-primary" />
+						</td>
+					  </tr>
+					</table>
+				  </form>
+				</div>
+			  </div>
+			</div>
+		  </section>
+		
+		<!-- End -->
+    <!-- End -->
+{% endblock %}

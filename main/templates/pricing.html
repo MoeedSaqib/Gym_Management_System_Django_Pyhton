@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load check_package %}
+{% load mathfilters %}
+{% block content %}
+
+
+<style>
+  .content-container {
+    width: 98%; /* Set the width to cover the right half of the screen */
+
+    /* Set the container height to 80% of the viewport height */
+    padding: 150px; /* Add padding to the container */
+    padding-left: 320px;
+    padding-right: 320px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add realistic shadow to the content container */
+  
+    border-radius: 8px; /* Add rounded corners for a more polished look */
+    overflow: hidden;  
+}
+
+.card {
+ 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #4d4d4d; /* Set the background color of the cards to black */
+  color:  white; /* Set the text color to white for better visibility on dark background */
+}
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 16px; /* Customize the font size for the card text */
+  margin-bottom: 10px; /* Add some margin below the card text for spacing */
+}
+ .card-header{
+  background-color: #333333; /* Set the background color of the cards to black */
+  color:  white; /* Set the text color to white for better visibility on dark background */
+}
+
+
+
+
+.table {
+  margin-top: 20px; /* Add some margin above the table */
+  border-collapse: collapse; /* Collapse borders between table cells */
+  width: 100%; /* Set the table width to 100% */
+}
+
+.table th,
+.table td {
+  padding: 6px; /* Add padding to table cells */
+  border: 1px solid #ccc; /* Add a border to table cells */
+}
+
+.table th {
+  background-color: transaprent; /* Set a background color for table header cells */
+  font-size: 18px; /* Customize the font size for table header cells */
+  color: white;
+}
+
+.table th:first-child,
+.table td:first-child {
+  text-align: left; /* Align text to the left for the first column */
+}
+
+.table td {
+  text-align: center; /* Align text to the center for the data cells */
+  vertical-align: middle; /* Center the content vertically within cells */
+}
+
+.table i {
+  font-size: 24px; /* Customize the font size for the icons */
+}
+
+.table i.bi-x-lg {
+  color: #ff0000; /* Set the color to red for "x" icons */
+}
+
+.table i.bi-check-lg {
+  color: #00cc00; /* Set the color to green for check icons */
+}
+
+
+
+</style>
+<!-- Main Start -->
+<link rel="stylesheet" type="text/css" href="{% static 'icons-main/font/bootstrap-icons.css' %}" />
+<div class="content-container mx-3 my-1"> 
+    <h1 class="text-center mb-4 section-heading border-bottom pb-2">Plans</h1>
+
+  <div class="row row-cols-5 row-cols-md-3 mb-5 text-center">
+    {% for plan in pricing %}
+
+
+
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm {% if plan.highlight_status %} border-primary {% endif %}">
+        {% if plan.highlight_status %}
+        <div class="card-header py-3 text-white bg-primary border-primary">
+          {% else %}
+        <div class="card-header py-3">
+          {% endif %}
+          <h4 class="my-0 fw-normal">{{plan.title}}</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">${{plan.price}}
+            <small class="text-muted fw-light">/{{plan.validity_days}} Days</small></h1>
+          <h6 class="text-dark" >Membery Capacity {{plan.max_member|sub:plan.total_members}}</h6>
+          
+          
+        
+          <ul class="list-unstyled mt-3 mb-4">
+            {% for feature in plan.subplanfeature_set.all %}
+            <li>{{feature.title}}</li>
+            {% endfor %}
+          </ul>
+
+          
+
+          {% if request.user.is_authenticated %}
+          {% check_user_package request.user.id plan.id as check_pckg %}
+          {% check_pckg_validity request.user.id plan.id as check_validity %}
+
+          {% if check_pckg %}
+            {% if check_validity %}
+              <a href="{% url 'checkout' plan.id %}" class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+            {% else %}
+              <a href="#" class="w-100 btn btn-lg btn-dark disabled">Purchased</a>
+            {% endif %}
+          {% else %}
+          <a href="{% url 'checkout' plan.id %}" class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+          {% endif %}
+          
+          {% else %}
+          <a href="{% url 'login' %}" class="w-100 btn btn-lg btn-outline-primary">Get started</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<h1 class="text-center mb-4 section-heading border-bottom pb-2"> Compare Plans</h1>
+
+        <div class="table-responsive">
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th style="width: 34%;"></th>
+                {% for pp in pricing %}
+                <th style="width: 22%;">{{pp.title}}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for df in dfeatures %}
+              <tr>
+                <th scope="row" class="text-start">{{df.title}}</th>
+                {% for pp in pricing %}
+                <td>
+                  {% if pp in df.subplans.all %}
+                  <i class="bi bi-check-lg"></i>
+                  {% else %}
+                  <i class="bi bi-x-lg text-danger"></i>
+                  {% endif %}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+            </div>
+
+
+      </div><!-- End -->
+{% endblock %}
